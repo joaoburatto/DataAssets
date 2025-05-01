@@ -8,12 +8,19 @@ The **DataAssets Package** provides a system for managing and accessing global d
 - Preloads data assets for runtime access.
 - Provides a simple API for accessing data assets globally.
 
+## Initialization
+- **Editor**: The `DataAssetEditorHelper` ensures all `DataAsset` instances are created and validated when the project changes.
+- **Runtime**: The `DataAssetsLoader` preloads all `DataAsset` instances at startup and registers them for global access.
+
 ---
 
 ## How to Use
 
-### 1. Create a `DataAsset` Class
-Create a class that inherits from `DataAsset`. This class will represent your global data.
+### 1. Configure the DataAssets Folder
+Find the `DataAssetConfig` object in your project. This object specifies the folder where `DataAsset` instances will be stored. Change settings to taste.
+
+### 2. Create a `DataAsset` Class
+Create a class that inherits from `DataAsset`. After recompilation `DataAssetEditorHelper` will create the ScriptableObject asset in the folder specified in the config asset.
 
 ```csharp
 using DataAssetsPackage;
@@ -24,9 +31,6 @@ public class GameSettingsDataAsset : DataAsset
     public string defaultLanguage;
 }
 ```
-
-### 2. Configure the DataAssets Folder
-Ensure you have a `DataAssetConfig` object in your project. This object specifies the folder where `DataAsset` instances will be stored. If it doesn't exist, create one manually.
 
 ### 3. Access Data Assets in Code
 Use the `DataAssets.Get<T>()` method to access your data assets globally.
@@ -52,28 +56,21 @@ public class ExampleUsage : MonoBehaviour
 ```
 
 ### 4. Project Settings Window Integration
-The `DataAssetsSettingsProvider` provides an editor interface for editing data assets in the Project Settings. Access it in the **Project Settings** Window under **Data Assets**.
+The `DataAssetsSettingsProvider` provides an editor interface for editing data assets in the Project Settings. Access it in the **Project Settings** Window under **Data Assets**, you can also edit the **ScriptableObject** asset on the inpector as you would with any other **ScriptableObject**.
 
 ---
 
 ## Best Practices
-### Don't add MEMORY HEAVY assets in DataAssets.
-- 1.1 Gigantic lists/dictionaries or big strings might impact startup time.
-- 1.2 If you want to add GameObjects or assets that are heavy, use Addressables via AssetReference a load them as needed. Actually I'm not sure if heavy assets that are Unity assets are an issue, they might not be loaded with the DataAsset object.
-### Use these as a "global" READ ONLY data container, a way to store data that is not tied to a specific object and is more broad in uses.
-- 2.1. For example, you can use this to store the project scene references, like an Addressable Scene and have only minimal memory usage for initialization.
-- 2.2. You can use this to store the game settings, like the default game volume settings, default language.
-### Use this as a READ ONLY data provider, I don't recommend changing the data in runtime.
-- 3.1 This is a recommendation for ScriptableObjects in general, but in this case, it is even more important as these are loaded at startup and are never loaded again.
-### Don't call stuff from a DataAsset on another DataAsset.
-- 4.1 I doubt this would ever happen, but if you do this, you might end up with a circular dependency and race conditions.
-
----
-
-## Initialization
-- **Editor**: The `DataAssetEditorHelper` ensures all `DataAsset` instances are created and validated when the project changes.
-- **Runtime**: The `DataAssetsLoader` preloads all `DataAsset` instances at startup and registers them for global access.
-
----
-
-This system simplifies the management of global data in Unity, ensuring consistency and ease of access across your project.
+### 1. Don't add MEMORY HEAVY assets in DataAssets.
+- Gigantic lists/dictionaries or big strings (as in a giant JSON text) might impact startup time.
+- If you want to add GameObjects or assets that are heavy, use Addressables via AssetReference a load them as needed.
+- I'm not sure if heavy assets that are Unity assets are an issue, they might not be loaded in memory with the DataAsset object. Figure it out.
+### 2. Use these as a "global" READ ONLY data container, a way to store data that is not tied to a specific object and is more broad in uses.
+- For example, you can use this to store the project scene references, like an Addressable Scene and have only minimal memory usage for initialization.
+- You can use this to store the game settings, like the default game volume settings, default language.
+### 3. Use this as a READ ONLY data provider, I don't recommend changing the data in runtime.
+- This is a recommendation for ScriptableObjects in general, but in this case, it is even more important as these are loaded at startup and are never loaded again.
+### 4. Don't call stuff from a DataAsset on another DataAsset.
+- I doubt this would ever happen, but if you do this, you might end up with a circular dependency and race conditions.
+### 5. Use the DataAsset postfix for your DataAssets
+- Totally optional.
