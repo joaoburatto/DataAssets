@@ -1,4 +1,4 @@
-#if ENABLE_DATA_ASSET_SAMPLE
+#if ENABLE_DATA_ASSETS_SAMPLE
 using UnityEngine;
 
 namespace DataAssetsPackage.Sample.Behaviours

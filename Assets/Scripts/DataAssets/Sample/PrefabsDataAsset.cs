@@ -1,4 +1,4 @@
-#if ENABLE_DATA_ASSET_SAMPLE
+#if ENABLE_DATA_ASSETS_SAMPLE
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
