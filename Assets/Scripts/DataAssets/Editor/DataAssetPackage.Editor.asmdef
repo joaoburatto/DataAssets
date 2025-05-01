@@ -1,0 +1,16 @@
+{
+    "name": "DataAssetPackage.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:979314d1952d52f4db2fe02eec244042"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
