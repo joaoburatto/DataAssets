@@ -6,7 +6,7 @@
 // using UnityEditor;
 // using UnityEngine;
 //
-// namespace DataAssets.Editor
+// namespace DataAssetsPackage.Editor
 // {
 //     /// <summary>
 //     /// Simple writer to generate a partial class for DataAssets.

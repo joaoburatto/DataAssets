@@ -1,7 +1,7 @@
 #if ENABLE_DATA_ASSET_SAMPLE
 using System.Collections.Generic;
 
-namespace DefaultNamespace.Sample
+namespace DataAssetsPackage.Sample
 {
     public class DefaultNamesDataAsset : DataAsset
     {

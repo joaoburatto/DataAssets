@@ -1,8 +1,9 @@
+#if UNITY_EDITOR
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace DataAssetsPackage
 { 
-    // You can move this the asset of this class to another place if you want
+    // You can move the asset of this class to another place if you want.
     
     /// <summary>
     /// Configures the data assets in the project.
@@ -10,9 +11,10 @@ namespace DefaultNamespace
     [CreateAssetMenu(fileName = "DataAssetConfig", menuName = "DataAssets/DataAssetConfig", order = 1)]
     public class DataAssetConfig : ScriptableObject
     {
+        /// <summary>
+        /// Path where created DataAssets will be placed when automatically created by DataAssetEditorHelper.
+        /// </summary>
         public string DataAssetsPath = "Assets/DataAssets";
-        
-        // public bool GenerateDataAssetsCode = true;
-        // public string GeneratedDataAssetsCodePath = "Assets/Scripts/DataAssets/DataAsset.Generated.cs";
     }
 }
+#endif

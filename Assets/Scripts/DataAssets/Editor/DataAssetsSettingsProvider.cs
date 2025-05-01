@@ -3,12 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using DefaultNamespace;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace DataAssets.Editor
+namespace DataAssetsPackage.Editor
 {
     /// <summary>
     /// Used to display the data assets in the DataAssets in the Project Settings window.

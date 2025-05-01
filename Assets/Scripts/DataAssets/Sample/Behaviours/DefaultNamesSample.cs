@@ -1,20 +1,25 @@
 #if ENABLE_DATA_ASSET_SAMPLE
-using System;
 using UnityEngine;
 
-namespace DefaultNamespace.Sample
+namespace DataAssetsPackage.Sample.Behaviours
 {
     public class DefaultNamesSample : MonoBehaviour
     {
         private void Awake()
         {
+            // You can see that in the first scene, in the first frame, the data asset is already loaded.
+            LogDefaultNames();
+        }
+
+        private static void LogDefaultNames()
+        {
             DefaultNamesDataAsset defaultNamesDataAsset = DataAssets.Get<DefaultNamesDataAsset>();
-            
+
             if (defaultNamesDataAsset != null)
             {
-                foreach (var name in defaultNamesDataAsset.Names)
+                foreach (string defaultName in defaultNamesDataAsset.Names)
                 {
-                    Debug.Log(name);
+                    Debug.Log(defaultName);
                 }
             }
             else

@@ -1,9 +1,14 @@
 #if ENABLE_DATA_ASSET_SAMPLE
-namespace DefaultNamespace.Sample
+namespace DataAssetsPackage.Sample
 {
+    /// <summary>
+    /// I would have used the SceneReference class from the Unity package, but it would create a dependency for the sample.
+    /// </summary>
     public class ScenesDataAsset : DataAsset
     {
-        public string SceneName;
+        public string MainSceneName;
+
+        public string GameSceneName;
     }
 }
 #endif

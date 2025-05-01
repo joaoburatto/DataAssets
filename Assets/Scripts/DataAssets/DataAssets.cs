@@ -1,53 +1,44 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
-
-/// <summary>
-/// Used to initialize the data assets in runtime and provide access to them.
-/// </summary>
-public abstract partial class DataAssets
+namespace DataAssetsPackage
 {
-    private static readonly Dictionary<Type, DataAsset> DataAssetsDictionary = new Dictionary<Type, DataAsset>();
-        
     /// <summary>
-    /// Initializes the data assets in runtime to provide access to them.
+    /// Used to provide assets to the DataAssets on runtime.
     /// </summary>
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterAssembliesLoaded)]
-    private static void InitializeOnLoad()
+    public static class DataAssets
     {
-        Object[] preloadedAssets = PlayerSettings.GetPreloadedAssets();
-            
-        foreach (Object asset in preloadedAssets)
+        /// <summary>
+        /// Provides access to the data assets in the project based on their type, as they will always be a singleton.
+        /// </summary>
+        private static readonly Dictionary<Type, DataAsset> DataAssetsDictionary = new Dictionary<Type, DataAsset>();
+
+        /// <summary>
+        /// Adds a data asset to the dictionary.
+        /// </summary>
+        public static void Register<T>(T dataAsset) where T : DataAsset
         {
-            if (asset is not DataAsset dataAsset)
+            // No need to check if the data asset is already registered, as it will be registered only once.
+            DataAssetsDictionary.Add(typeof(T), dataAsset);
+        }
+
+        /// <summary>
+        /// Provides access to the data asset of type T.
+        ///
+        /// It is inferred that the data asset will never be null and will always be loaded, unless something weird happens.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T Get<T>() where T : DataAsset
+        {
+            if (DataAssetsDictionary.TryGetValue(typeof(T), out DataAsset dataAsset))
             {
-                continue;
+                return (T)dataAsset;
             }
 
-            DataAssetsDictionary.Add(asset.GetType(), dataAsset);
-
-            dataAsset.OnLoaded();
+            Debug.LogError($"Data asset of type {typeof(T)} not found.");
+            return null;
         }
-    }
-
-    /// <summary>
-    /// Provides access to the data asset of type T.
-    ///
-    /// It is inferred that the data asset will never be null and will always be loaded, unless something weird happens.
-    /// </summary>
-    /// <typeparam name="T"></typeparam>
-    /// <returns></returns>
-    public static T Get<T>() where T : DataAsset
-    {
-        if (DataAssetsDictionary.TryGetValue(typeof(T), out DataAsset dataAsset))
-        {
-            return (T)dataAsset;
-        }
-
-        Debug.LogError($"Data asset of type {typeof(T)} not found.");
-        return null;
     }
 }

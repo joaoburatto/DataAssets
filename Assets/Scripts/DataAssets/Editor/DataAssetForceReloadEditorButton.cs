@@ -1,7 +1,7 @@
 // #if UNITY_EDITOR
 // using UnityEditor;
 //
-// namespace DataAssets.Editor
+// namespace DataAssetsPackage.Editor
 // {
 //     /// <summary>
 //     /// Button to force reload data assets in the editor.

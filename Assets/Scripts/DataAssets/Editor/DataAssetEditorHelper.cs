@@ -2,12 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using DefaultNamespace;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace DataAssets.Editor
+namespace DataAssetsPackage.Editor
 {
     /// <summary>
     /// Used to initialize, maintain and validate the data assets in the editor.
