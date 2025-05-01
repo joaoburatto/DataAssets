@@ -141,10 +141,7 @@ PlayerSettings:
   visionOSBundleVersion: 1.0
   tvOSBundleVersion: 1.0
   bundleVersion: 0.1.0
-  preloadedAssets:
-  - {fileID: 11400000, guid: 8ca50041ed751b54a99d7ed7bcc32020, type: 2}
-  - {fileID: 11400000, guid: d6f07c39f1b2c1c47ab2ab46d4d88324, type: 2}
-  - {fileID: 11400000, guid: 4c7e9fc73fe8d3741b45612e0af2cf6d, type: 2}
+  preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -820,7 +817,7 @@ PlayerSettings:
   webGLCloseOnQuit: 0
   webWasm2023: 0
   scriptingDefineSymbols:
-    Standalone: ENABLE_DATA_ASSET_SAMPLE
+    Standalone: 
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

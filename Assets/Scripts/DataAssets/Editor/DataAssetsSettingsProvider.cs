@@ -14,10 +14,10 @@ namespace DataAssetsPackage.Editor
     /// </summary>
     public class DataAssetsSettingsProvider : SettingsProvider
     {
-        public readonly Dictionary<DataAsset, bool> DataAssetsFoldouts = new Dictionary<DataAsset, bool>();
-        
-        public int _currentPage = 0;
-        public int _totalPages = 0;
+        private readonly Dictionary<DataAsset, bool> _dataAssetsFoldouts = new Dictionary<DataAsset, bool>();
+
+        private int _currentPage = 0;
+        private int _totalPages = 0;
         
         private List<DataAsset> _dataAssets = new List<DataAsset>();
 
@@ -130,20 +130,20 @@ namespace DataAssetsPackage.Editor
                 
             assetName = Regex.Replace(assetName, "([a-z])([A-Z])", "$1 $2");
 
-            if (!DataAssetsFoldouts.ContainsKey(asset))
+            if (!_dataAssetsFoldouts.ContainsKey(asset))
             {
-                DataAssetsFoldouts.Add(asset, false);
+                _dataAssetsFoldouts.Add(asset, false);
             }
                 
-            DataAssetsFoldouts[asset] = EditorGUI.BeginFoldoutHeaderGroup(
+            _dataAssetsFoldouts[asset] = EditorGUI.BeginFoldoutHeaderGroup(
                 EditorGUILayout.GetControlRect(),
-                DataAssetsFoldouts[asset],
+                _dataAssetsFoldouts[asset],
                 $"{assetName}"
             );
                 
             EditorGUILayout.EndFoldoutHeaderGroup();
 
-            if (DataAssetsFoldouts[asset])
+            if (_dataAssetsFoldouts[asset])
             {
                 EditorGUILayout.Space();
                 

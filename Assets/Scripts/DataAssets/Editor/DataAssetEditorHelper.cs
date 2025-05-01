@@ -26,14 +26,12 @@ namespace DataAssetsPackage.Editor
             ValidateDataAssets();
         }
 
-        public static void ValidateDataAssets()
+        private static void ValidateDataAssets()
         {
             if (EditorApplication.isCompiling)
             {
                 return;
             }
-            
-            Debug.Log("Project changed. Refreshing data assets...");
 
             if (!TryGetDataAssetConfig(out DataAssetConfig dataAssetConfig))
             {
@@ -45,13 +43,7 @@ namespace DataAssetsPackage.Editor
             ValidateDataAssetsFolder(dataAssetConfig.DataAssetsPath);
         
             List<Type> dataAssetTypes = GetAllDataAssetTypes();
-        
             ValidateDataAssets(dataAssetTypes, dataAssetConfig);
-
-            // if (dataAssetConfig.GenerateDataAssetsCode)
-            // {
-            //     DataAssetPartialClassWriter.Generate(dataAssetTypes, dataAssetConfig.GeneratedDataAssetsCodePath);
-            // }
         }
 
         private static void ValidateDataAssets(List<Type> dataAssetTypes, DataAssetConfig dataAssetConfig)
