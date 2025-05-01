@@ -58,6 +58,8 @@ public class ExampleUsage : MonoBehaviour
 ### 4. Project Settings Window Integration
 The `DataAssetsSettingsProvider` provides an editor interface for editing data assets in the Project Settings. Access it in the **Project Settings** Window under **Data Assets**, you can also edit the **ScriptableObject** asset on the inpector as you would with any other **ScriptableObject**.
 
+![{6EF2DC17-26E8-4BBE-9D7E-8FC640498409}](https://github.com/user-attachments/assets/2c629d61-ac4d-4b94-93cd-281c6c227653)
+
 ---
 
 ## Best Practices
