@@ -1,0 +1,12 @@
+{
+  "name": "com.joaoburatto.dataassets",
+  "version": "1.0.0",
+  "displayName": "Data Assets",
+  "description": "The DataAssets Package provides a system for managing and accessing global data in Unity using ScriptableObject instances. It ensures that data assets are automatically created, validated, and preloaded for runtime use.",
+  "unity": "6.0", 
+  "license": "MIT",
+  "author": {
+    "name": "João Buratto",
+    "email": "joaoburattoc@gmail.com"
+  }
+}
