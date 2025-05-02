@@ -33,17 +33,10 @@ namespace DataAssetsPackage.Editor
                 return;
             }
 
-            if (!TryGetDataAssetConfig(out DataAssetConfig dataAssetConfig))
-            {
-                Debug.LogError("DataAssetConfig not found. Please create one.");
+            DataAssetConfig dataAssetConfig = GetDataAssetConfig();
 
-                return;
-            }
-        
             ValidateDataAssetsFolder(dataAssetConfig.DataAssetsPath);
-        
-            List<Type> dataAssetTypes = GetAllDataAssetTypes();
-            ValidateDataAssets(dataAssetTypes, dataAssetConfig);
+            ValidateDataAssets(GetAllDataAssetTypes(), dataAssetConfig);
         }
 
         private static void ValidateDataAssets(List<Type> dataAssetTypes, DataAssetConfig dataAssetConfig)
@@ -52,7 +45,6 @@ namespace DataAssetsPackage.Editor
             Dictionary<Type, DataAsset> dataAssets = CreateDataAssetsDict(existingDataAssets);
 
             CreateMissingDataAssets(dataAssetTypes, dataAssets, dataAssetConfig);
-        
             ValidatePreloadedAssets(dataAssets);
         }
 
@@ -139,19 +131,20 @@ namespace DataAssetsPackage.Editor
             return existingDataAssets;
         }
 
-        private static bool TryGetDataAssetConfig(out DataAssetConfig dataAssetConfig)
+        private static DataAssetConfig GetDataAssetConfig()
         {
             // get the DataAssetConfig scriptable object
-            dataAssetConfig = AssetDatabase.FindAssets("t:DataAssetConfig")
+            DataAssetConfig dataAssetConfig = AssetDatabase.FindAssets("t:DataAssetConfig")
                 .Select(guid => AssetDatabase.LoadAssetAtPath<DataAssetConfig>(AssetDatabase.GUIDToAssetPath(guid)))
                 .FirstOrDefault();
 
-            if (dataAssetConfig != null)
+            if (dataAssetConfig == null)
             {
-                return true;
+                dataAssetConfig = ScriptableObject.CreateInstance(typeof(DataAssetConfig)) as DataAssetConfig;
+                AssetDatabase.CreateAsset(dataAssetConfig!, "Assets/DataAssetsConfig.asset");
             }
-        
-            return false;
+
+            return dataAssetConfig;
         }
 
         private static List<Type> GetAllDataAssetTypes()
