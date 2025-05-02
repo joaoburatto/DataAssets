@@ -63,15 +63,16 @@ The `DataAssetsSettingsProvider` provides an editor interface for editing data a
 ---
 
 ## Best Practices
-### 1. Don't add MEMORY HEAVY assets in DataAssets.
-- Gigantic lists/dictionaries or big strings (as in a giant JSON text) might impact startup time.
-- If you want to add GameObjects or assets that are heavy, use Addressables via AssetReference a load them as needed.
-- I'm not sure if heavy assets that are Unity assets are an issue, they might not be loaded in memory with the DataAsset object. Figure it out.
+
+### 1. Use this as a READ ONLY data provider, I don't recommend changing the data in runtime.
+- This is a recommendation for ScriptableObjects in general, but in this case, it is even more important as these are loaded at startup and are never loaded again.
 ### 2. Use these as a "global" READ ONLY data container, a way to store data that is not tied to a specific object and is more broad in uses.
 - For example, you can use this to store the project scene references, like an Addressable Scene and have only minimal memory usage for initialization.
 - You can use this to store the game settings, like the default game volume settings, default language.
-### 3. Use this as a READ ONLY data provider, I don't recommend changing the data in runtime.
-- This is a recommendation for ScriptableObjects in general, but in this case, it is even more important as these are loaded at startup and are never loaded again.
+### 3. Don't add MEMORY HEAVY assets in DataAssets.
+- Gigantic lists/dictionaries or big strings (as in a giant JSON text) might impact startup time.
+- If you want to add GameObjects or assets that are heavy, use Addressables via AssetReference a load them as needed.
+- I'm not sure if heavy assets that are Unity assets are an issue, they might not be loaded in memory with the DataAsset object. Figure it out.
 ### 4. Don't call stuff from a DataAsset on another DataAsset.
 - I doubt this would ever happen, but if you do this, you might end up with a circular dependency and race conditions.
 ### 5. Use the DataAsset postfix for your DataAssets
