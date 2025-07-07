@@ -21,6 +21,7 @@ namespace DataAssetsPackage.Editor
         
         private List<DataAsset> _dataAssets = new List<DataAsset>();
 
+        // yes, this is a magic number, but it is used to limit the number of displayed DataAssets per page.
         private const int PageDisplayCount = 12;
         
         private DataAssetsSettingsProvider(string path, SettingsScope scope) : base(path, scope) { }
@@ -69,6 +70,11 @@ namespace DataAssetsPackage.Editor
 
             for (int i = startIndex; i < startIndex + PageDisplayCount && i < elementsCount; i++)
             {
+                if (_dataAssets == null)
+                {
+                    continue;
+                }
+
                 DataAsset asset = _dataAssets[i];
                 DrawDataAssetFoldout(asset);
             }
@@ -126,15 +132,15 @@ namespace DataAssetsPackage.Editor
         private void DrawDataAssetFoldout(DataAsset asset)
         {
             string assetName = asset.name;
+            
+            // Remove the "DataAsset" prefix from the asset name for better readability
             assetName = assetName.Replace(nameof(DataAsset), string.Empty);
-                
+            
+            // Add spaces before capital letters for better readability
             assetName = Regex.Replace(assetName, "([a-z])([A-Z])", "$1 $2");
 
-            if (!_dataAssetsFoldouts.ContainsKey(asset))
-            {
-                _dataAssetsFoldouts.Add(asset, false);
-            }
-                
+            // Initialize the foldout state as closed
+            _dataAssetsFoldouts.TryAdd(asset, false);
             _dataAssetsFoldouts[asset] = EditorGUI.BeginFoldoutHeaderGroup(
                 EditorGUILayout.GetControlRect(),
                 _dataAssetsFoldouts[asset],
@@ -143,6 +149,7 @@ namespace DataAssetsPackage.Editor
                 
             EditorGUILayout.EndFoldoutHeaderGroup();
 
+            // If the foldout is open, draw the asset's inspector
             if (_dataAssetsFoldouts[asset])
             {
                 EditorGUILayout.Space();
@@ -154,6 +161,8 @@ namespace DataAssetsPackage.Editor
 
                 using (new EditorGUILayout.VerticalScope("box"))
                 {
+                    EditorGUILayout.ObjectField(asset, typeof(DataAsset), false);
+                    
                     UnityEditor.Editor editor = UnityEditor.Editor.CreateEditor(asset);
                     if (editor != null)
                     {

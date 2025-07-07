@@ -64,6 +64,7 @@ namespace DataAssetsPackage.Editor
             Dictionary<Type, DataAsset> dataAssetsDict = existingDataAssets
                 .GroupBy(dataAsset => dataAsset.GetType())
                 .ToDictionary(group => group.Key, group => group.First());
+            
             return dataAssetsDict;
         }
 
@@ -74,11 +75,8 @@ namespace DataAssetsPackage.Editor
         
             newPreloadedAssets.RemoveAll(asset => asset == null);
         
-            foreach (KeyValuePair<Type, DataAsset> typeDataAssetPair in dataAssetsDict)
+            foreach ((Type dataAssetType, DataAsset dataAsset) in dataAssetsDict)
             {
-                Type dataAssetType = typeDataAssetPair.Key;
-                DataAsset dataAsset = typeDataAssetPair.Value;
-
                 // check if the DataAsset is in the preloaded assets
                 if (!preloadedAssets.Contains(dataAsset))
                 {
@@ -92,8 +90,7 @@ namespace DataAssetsPackage.Editor
             PlayerSettings.SetPreloadedAssets(newPreloadedAssets.ToArray());
         }
 
-        private static void CreateMissingDataAssets(List<Type> dataAssetTypes, Dictionary<Type, DataAsset> existingDataAssetsDict,
-            DataAssetConfig dataAssetConfig)
+        private static void CreateMissingDataAssets(List<Type> dataAssetTypes, Dictionary<Type, DataAsset> existingDataAssetsDict, DataAssetConfig dataAssetConfig)
         {
             bool createdNewDataAssets = false;
         
@@ -103,7 +100,6 @@ namespace DataAssetsPackage.Editor
                 if (!existingDataAssetsDict.ContainsKey(dataAssetInheritorType))
                 {
                     // create the missing data asset on data asset path
-                
                     string dataAssetPath = $"{dataAssetConfig.DataAssetsPath}/{dataAssetInheritorType.Name}.asset";
                     DataAsset dataAsset = ScriptableObject.CreateInstance(dataAssetInheritorType) as DataAsset;
                 

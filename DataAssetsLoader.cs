@@ -21,7 +21,7 @@ namespace DataAssetsPackage
             
             foreach (Object asset in preloadedAssets)
             {
-                // Sanity check as you can add any type of Unity asset to the preloaded assets.
+                // Type check as you can add any type of Unity asset to the preloaded assets.
                 if (asset is not DataAsset dataAsset)
                 {
                     continue;
